@@ -3,3 +3,11 @@ body{
     /* Adds 20px of padding to the sides and 80px to the top and bottom (of the whole page) */
     padding:20px 60px; 
 }
+
+/* Here we are setting a styleing for all <a> tags. This is because react-router-dom
+turns the <Link/> tags(in the Header component, for example) into <a> tags and then you have that ugle underline and purple color
+once clicked on  */
+a {
+    text-decoration: none;
+    color: black;
+}
