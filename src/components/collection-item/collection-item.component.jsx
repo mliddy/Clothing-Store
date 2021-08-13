@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './collection-item.styles.scss'
-// Component to contain and present the item in the collection for sale.
+// Component to contain and present the individual item in the collection for sale.
 // Accepts the parameters id,name,imageUrl,price from the shop.data file(SHOP_DATA) e.g:
 //items: [
     // {
@@ -11,7 +11,7 @@ import './collection-item.styles.scss'
     //     price: 25
     //   },
 
-// It will be pulled into collection-preview as there are 4 displayed in that component at any one time    
+// It creates the item whuch will be pulled into collection-preview as there are 4 displayed in that component at any one time    
 
 const CollectionItem = ({id,name,imageUrl,price}) =>{
 

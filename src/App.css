@@ -11,3 +11,9 @@ a {
     text-decoration: none;
     color: black;
 }
+
+/* For every element make the boz sizing be border box  Dont fully understand this.
+looks like it makes the border padding, etc dont affect element size and thus the sign in elements all line up  */
+* {
+    box-sizing:border-box;
+}

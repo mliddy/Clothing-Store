@@ -4,6 +4,10 @@ import MenuItem from '../menu-item/menu-item.component'
 
 import './directory.styles.scss'
 
+// Directory component holds state for our 5 sections: MENS, HATS,etc
+// It holds state for those sections and then maps through that array, passing the data to 
+// menu item to be created and then Directory renders that menu item(category) on the page
+
 class Directory extends Component{
 
     constructor(){
