@@ -15,8 +15,52 @@ const config = {
     measurementId: "G-0VLNXPD1Z4"
 };
 
+// I think the point of this is to store the GoogleAuthorized users into our firebase DB
+// userAuth is the object we get back from Google Authorization?. In the authStateChanged() in App.js
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+
+    if (!userAuth) { return; } // If there is no authenticated user, then drop out
+
+    //If there is an authenticated user
+    // Make a call to the DB and see if that userAuth data is in there(meaning they are in the firebase DB)
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    //Get() the user snapShot, using userRef
+    const snapShot = await userRef.get();
+
+    // If they are not already in the DB, create the object and put it in(note using .set() on userRef)
+    if (!snapShot.exists) {
+
+        //Destructure userAuth and grab the displayName and email, as we'll store that in the DB object
+        const { displayName, email } = userAuth;
+        //When did we make that document?
+        const createdAt = new Date();
+
+        //.set() is asychronous
+        try {
+            await userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData
+            })
+        }
+        catch (err) {
+            console.log("error creating USer!!!")
+        }
+    }
+     // Return userRef either waybecause there is a chance we may need to use it for other things
+     return userRef;
+}
+
 // Not sure about this shit
-firebase.initializeApp(config);
+// But the if() is becasue i was getting a ton of errors every time the page loaded initially. From stackoverflow
+if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+ }else {
+    firebase.app(); // if already initialized, use that one
+ }
+//This line used to be the only one
+ //firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
