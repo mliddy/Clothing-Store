@@ -74,6 +74,8 @@ class App extends React.Component {
     this.unsubscribeFromAuth();
   }
 
+  // The signin Route says: if there is a props.currentUser(user signed in) don't let them access signin
+  //, instead redirect to home. Otherwise, they can be at /signin
   render() {
     return (
       <div>

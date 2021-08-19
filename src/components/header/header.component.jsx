@@ -3,10 +3,12 @@ import './header.styles.scss'
 import { Link } from 'react-router-dom'
 import { ReactComponent as Logo } from '../../assets/crown.svg'
 import { auth } from '../../firebase/firebase.utils'
+import CartIcon from '../cart-icon/cart-icon.component'
+import CartDropdown from '../cart-dropdown/cart-dropdown.component'
 
 //importing in connect as we want to be able to pull in our user object from the reducer, not from state 
 // Before this HEader was getting the user from App.js. We don't want that.
-import {connect} from 'react-redux' // connect is a higher order component to allow us modify our comp by having access to redux stuff
+import { connect } from 'react-redux' // connect is a higher order component to allow us modify our comp by having access to redux stuff
 
 // Header component. Header, obviosuly. Contains the logo which we get from the crown.svg file
 // which is imported in that syntax above. We use Link to link us back to the home page when it is clicked on
@@ -15,7 +17,7 @@ import {connect} from 'react-redux' // connect is a higher order component to al
 // Signin/out achieved by a terniary . If there is a currentUser then show SIGN OUT and onClick to the auth.signout()
 // If there is not, then simply <Link/> to the signin page
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, hidden }) => {
 
     return (
         <div className='header'>
@@ -36,8 +38,10 @@ const Header = ({ currentUser }) => {
                     :
                     <Link className='option' to='/signin'>SIGN IN</Link>
                 }
+                <CartIcon />
             </div>
 
+            {hidden ? null:<CartDropdown />}
         </div>
     )
 }
@@ -45,11 +49,22 @@ const Header = ({ currentUser }) => {
 
 // With connect() , pass it 2 fucntions, second optional, that will give us back another higher order component
 // that we will pass it our header.
-// The first argument we pass is the function that allows us to access the state - the state being our root reducer
+// The first argument we pass is the function(mapStateToProps) that allows us to access the state 
+// - the state being our root reducer
 // Root reducer has user, which has userReducer, which is the initial user state (currentUser). So initially
 // we'll get the currentUser value of null. But we want it anyway.
 
-const mapStateToProps = state =>({
-currentUser:state.user.currentUser
+// mapStateToProps => function tah treturns an object, where the name of the property of the property we want
+// to pass in (in this case : currentUser) and the value will be the value?
+// What we get, is the state object. The state is the root reducer(top level reducer).
+// We are passing in a currentUser property wher ethe value will be the current state.user.currentUser.
+
+//So i think all this shit is the way to grab the currentUser value from the reducers
+// this combination of mapStateToProps and connect will be used whenever we need to
+// grab props from reducers
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+    currentUser,
+    hidden
 })
+
 export default connect(mapStateToProps)(Header);

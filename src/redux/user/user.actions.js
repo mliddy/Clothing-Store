@@ -1,5 +1,5 @@
-import { UserActionTypes } from "./user.types" // again to avoid typos,etc
-
+import { UserActionTypes } from "./user.types" // again to avoid typos,etc. Pulling that from UserActiontypes comp
+ 
 //function that returns an object. Object is in the correct format that the action is expecting
 // In this case we are creating the setCurrentUser action function
 // Function that takes one parameter - the user object, either from snapshot - firebase, or userAuth(google)
