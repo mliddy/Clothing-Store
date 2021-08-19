@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import HomePage from './pages/homepage/homepage.component'
-import { Route } from 'react-router-dom'
+import HomePage from './pages/homepage/homepage.component' 
+import { Route,Redirect } from 'react-router-dom' // Redirect needed for 119(user signed in - shouldnt see sign in page)
 import ShopPage from './pages/shop/shop.component'
 import Header from './components/header/header.component'
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
@@ -80,17 +80,25 @@ class App extends React.Component {
         <Header/>
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={ShopPage} />
-        <Route path='/signin' component={SignInAndSignUp} />
+        <Route exact path='/signin' render={()=> this.props.currentUser ? (<Redirect to ='/' />):(<SignInAndSignUp/>)} />
       </div>
     );
   }
 }
 
 
+// Needed for 119(user signed in - shouldnt see sign in page)
+// accepts our user object,returns currentUser prop. Then we pass that to connect
+const mapStateToProps = ({user}) =>({
+  currentUser:user.currentUser 
+})
+
 const mapDispatchToProps = dispatch => ({
    setCurrentUser: user => dispatch(setCurrentUser(user)) 
 })
 
 //COnnecting our App to the outcome of our initial conmnect call using the second argument (dispatch) 
-// Doesnt need current user anymore, hence the null initial arg
-export default connect(null,mapDispatchToProps)(App);
+// mapStateToProps is there in order to get access to the user object from props (this.props.currentUser)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)(App);

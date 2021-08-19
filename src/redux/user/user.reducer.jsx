@@ -1,3 +1,5 @@
+import { UserActionTypes } from "./user.types"; // To avoid typos, etc
+
 //reducer is just a function that gets 2 properties: last/current state and the action(object with a type)
 // payload is a flexible prptery that we may want to use
 
@@ -9,7 +11,7 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE,action) =>{
 
     switch(action.type){
-        case 'SET_CURRENT_USER':
+        case UserActionTypes.SET_CURRENT_USER:
             return{
                 ...state, // grab the state and ..
                 currentUser:action.payload // change the current user value to whats coming in through the payload 
