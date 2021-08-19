@@ -6,13 +6,15 @@ import './custom-button.styles.scss'
 // THen destrcuture all the other other props and spread into our custombutton
 // Now if submit gets passed in it will respond to onSubmit, etc
 // Children are put inside. That's because children are the content inside 
- // non self closing tags. e.g. <CustomButton> Children in here </CustomButton>
- // ClassName on the button is dynamically rendered to make it possible to render
- // the Sign in With Google custom button
+// non self closing tags. e.g. <CustomButton> Children in here </CustomButton>
+// ClassName on the button is dynamically rendered to make it possible to render
+// the Sign in With Google custom button
+// Inverted prop changes teh color of the button when we hover to add to cart
 
-const CustomButton = ({children,isGoogleSignIn,...otherProps}) => {
+const CustomButton = ({ children, isGoogleSignIn, inverted, ...otherProps }) => {
     return (
-        <button className = {`${isGoogleSignIn ? 'google-sign-in':''} custom-button`} {...otherProps}>
+        <button className={` ${inverted ? 'inverted' : ''} ${isGoogleSignIn ? 'google-sign-in' : ''}
+         custom-button`} {...otherProps}>
             {children}
         </button>
     )
