@@ -27,3 +27,14 @@ export const selectCartItemsCount = createSelector(
     cartItems => cartItems.reduce((accumulator,cartItem) => accumulator+cartItem.quantity,0)
 );
 
+
+//Next selector is to return the 'hidden' variable in cart. Remember: cart has 2 properties: cartItems and hidden
+export const selectCartHidden = createSelector(
+    [selectCart],
+    cart => cart.hidden
+);
+
+export const selectCartTotal = createSelector(
+    [selectCartItems],
+    cartItems => cartItems.reduce((totalPrice,item) => totalPrice + item.price*item.quantity,0)
+);

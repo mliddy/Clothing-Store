@@ -5,6 +5,9 @@ import { ReactComponent as Logo } from '../../assets/crown.svg'
 import { auth } from '../../firebase/firebase.utils'
 import CartIcon from '../cart-icon/cart-icon.component'
 import CartDropdown from '../cart-dropdown/cart-dropdown.component'
+import { createStructuredSelector } from 'reselect' // quick way to access multiple selectors
+import { selectCurrentUser } from '../../redux/user/user.selectors'
+import { selectCartHidden } from '../../redux/cart/cart.selectors'
 
 //importing in connect as we want to be able to pull in our user object from the reducer, not from state 
 // Before this HEader was getting the user from App.js. We don't want that.
@@ -62,9 +65,16 @@ const Header = ({ currentUser, hidden }) => {
 //So i think all this shit is the way to grab the currentUser value from the reducers
 // this combination of mapStateToProps and connect will be used whenever we need to
 // grab props from reducers
-const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
-    currentUser,
-    hidden
+// Now we are using selectors. In this case the createStructuredSelectr function. The familar way would look like:
+        // const mapStateToProps = (state) => ({
+        //     currentUser:selectCurrentUser(state),
+        //     hidden:selectCartHidden(state)
+        // })
+
+// But using createSTructuredSelector now makes it look like:
+const mapStateToProps = createStructuredSelector({
+    currentUser:selectCurrentUser,
+    hidden:selectCartHidden
 })
 
 export default connect(mapStateToProps)(Header);

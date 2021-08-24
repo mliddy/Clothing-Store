@@ -5,9 +5,12 @@ import { Route,Redirect } from 'react-router-dom' // Redirect needed for 119(use
 import ShopPage from './pages/shop/shop.component'
 import Header from './components/header/header.component'
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import CheckoutPage from './pages/checkout/checkout.component'
 import { auth,createUserProfileDocument } from './firebase/firebase.utils'
 import {connect} from 'react-redux'
 import {setCurrentUser} from './redux/user/user.actions'
+import { selectCurrentUser } from './redux/user/user.selectors';
+import {createStructuredSelector} from 'reselect'
 
 
 
@@ -82,6 +85,8 @@ class App extends React.Component {
         <Header/>
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={ShopPage} />
+        <Route exact path = '/checkout' component = {CheckoutPage}/>
+
         <Route exact path='/signin' render={()=> this.props.currentUser ? (<Redirect to ='/' />):(<SignInAndSignUp/>)} />
       </div>
     );
@@ -91,8 +96,9 @@ class App extends React.Component {
 
 // Needed for 119(user signed in - shouldnt see sign in page)
 // accepts our user object,returns currentUser prop. Then we pass that to connect
-const mapStateToProps = ({user}) =>({
-  currentUser:user.currentUser 
+// Now we are using selectors 
+const mapStateToProps = createStructuredSelector({
+  currentUser:selectCurrentUser
 })
 
 const mapDispatchToProps = dispatch => ({
