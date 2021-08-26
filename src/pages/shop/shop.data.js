@@ -1,12 +1,12 @@
 const SHOP_DATA = [
   {
     id: 1,
-    title: 'Hats',
+    title: 'Hats and dicks',
     routeName: 'hats',
     items: [
       {
         id: 1,
-        name: 'Brown Brim',
+        name: 'cock rims',
         imageUrl: 'https://i.ibb.co/ZYW3VTp/brown-brim.png',
         price: 25
       },
@@ -18,7 +18,7 @@ const SHOP_DATA = [
       },
       {
         id: 3,
-        name: 'Brown Cowboy',
+        name: 'Douche Hat',
         imageUrl: 'https://i.ibb.co/QdJwgmp/brown-cowboy.png',
         price: 35
       },

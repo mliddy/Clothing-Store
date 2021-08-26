@@ -5,14 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux' //Component that gives our app access to the reducers as well as the store
-import store from './redux/store'
+import {store,persistor} from './redux/store'
+import {PersistGate} from 'redux-persist/integration/react'
 
 //Provider is the parent of everything so it has access to the whole store
 ReactDOM.render(
   <Provider store = {store}>
   <BrowserRouter>
   <React.StrictMode>
+    <PersistGate persistor = {persistor}>
     <App />
+    </PersistGate>
   </React.StrictMode>,
   </BrowserRouter>,
   </Provider>,
