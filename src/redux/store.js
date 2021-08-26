@@ -19,5 +19,6 @@ const middlewares = [logger]
 // persistor is now a persisted version of our store => all data
 export const persistor = persistStore(store); 
 
-//NOw return an object that contains the store aswell as the persistor
-// export default { store,persistor };
+//NOw return an object that contains the store aswell as the persistor. But im not sure this actually does anything
+const exportObject = { store,persistor }; 
+export default exportObject;
