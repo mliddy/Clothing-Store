@@ -1,7 +1,5 @@
 import React from 'react'
-import SHOP_DATA from './shop.data'
-import CollectionPreview from '../../components/collection-preview/collection-preview.component'
-
+import CollectionsOverview from '../../components/collections-overview/collections-overview.component'
 // ShopPage acts as the container for the Shop Page(obviously)
 // Contains the state for all the individual sale items: specific hats, jackets, etc
 // Pulls that data in from a separate component called shop.data.js
@@ -11,31 +9,15 @@ import CollectionPreview from '../../components/collection-preview/collection-pr
 // So its kinda like a recursive call. ShopPage needs CollectionPreview which in turn needs CollectionItem
 // So CollectionItem gets passed up to CollectionPreview which gets passed up to ShopPage to be rendered on the page
 
-class ShopPage extends React.Component{
-
-    constructor(){
-        super();
-        
-        this.state = {
-            collections: SHOP_DATA
-        }
-    }
-
-    render(){
-       const {collections} = this.state;
+const ShopPage = ({collections})=> {
 
         return(
            <div className = 'shop-page'>
-               {
-                   collections.map(({id, ...otherCollectionProps}) =>
-                    (
-                        <CollectionPreview key = {id} {...otherCollectionProps}/>
-                    )
-                    )
-               }
+              <CollectionsOverview />
            </div>
         )
     }
-}
+
+
 
 export default ShopPage;
