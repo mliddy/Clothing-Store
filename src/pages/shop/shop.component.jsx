@@ -9,11 +9,15 @@ import CollectionsOverview from '../../components/collections-overview/collectio
 // So its kinda like a recursive call. ShopPage needs CollectionPreview which in turn needs CollectionItem
 // So CollectionItem gets passed up to CollectionPreview which gets passed up to ShopPage to be rendered on the page
 
-const ShopPage = ({collections})=> {
+import {Route} from 'react-router-dom'
+import CollectionPage from '../collection/collection.component'
+
+const ShopPage = ({match})=> {
 
         return(
            <div className = 'shop-page'>
-              <CollectionsOverview />
+              <Route exact path = {`${match.path}`}  component = {CollectionsOverview} />
+              <Route path = {`${match.path}/:collectionId`} component = {CollectionPage}/>
            </div>
         )
     }
