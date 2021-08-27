@@ -1,12 +1,12 @@
 const SHOP_DATA = {
   hats:{
     id: 1,
-    title: 'Hats and Beanies',
+    title: 'Hats',
     routeName: 'hats',
     items: [
       {
         id: 1,
-        name: 'cock rings',
+        name: 'Some crappy hat',
         imageUrl: 'https://i.ibb.co/ZYW3VTp/brown-brim.png',
         price: 25
       },
@@ -18,7 +18,7 @@ const SHOP_DATA = {
       },
       {
         id: 3,
-        name: 'Douche Hat',
+        name: 'The Old Brown Brim',
         imageUrl: 'https://i.ibb.co/QdJwgmp/brown-cowboy.png',
         price: 35
       },

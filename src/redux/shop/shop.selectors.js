@@ -10,6 +10,7 @@ export const selectCollections = createSelector(
     shop => shop.collections
 );
 
+// Ah, the missing piece.. Thi converts the object in shop_data into an array => Decribed in 153
 export const selectCollectionsForPreview = createSelector(
     [selectCollections],
     collections => Object.keys(collections).map(key => collections[key])
