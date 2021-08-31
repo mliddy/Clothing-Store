@@ -6,7 +6,7 @@ const SHOP_DATA = {
     items: [
       {
         id: 1,
-        name: 'Some crappy hat',
+        name: 'Some shitty hat',
         imageUrl: 'https://i.ibb.co/ZYW3VTp/brown-brim.png',
         price: 25
       },
