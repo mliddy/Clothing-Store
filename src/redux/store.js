@@ -7,12 +7,18 @@ import rootReducer from './root-reducer'
 //Alows us to cache our store based on certain conidtions
 import { persistStore } from 'redux-persist'
 
-//create middlwware using the logger
-const middlewares = [logger]
+//create middlwware using the logger. Blank this time as we are using a dev environment to avoid
+// a lot of clogging in the console
+const middlewares = []
+//Inside Node there is a NODE_ENV that we can set. Create react app sets the ENV property for us
+// When we run the Heroku deploy it sets the variable to production - I think
+// SO we below we are setting middlewares to only log in the dev environment.
+// AND you can see this working after saving and running git push heroku master. During the build it
+// displays the ENV as 'production's
+if(process.env.NODE_ENV === 'development'){
+    middlewares.push(logger);
 
-// Create the actual store
-// the applyMiddleware argument allows us ot pass in all the values in the logger array into the function as 
-// indovidual elements.
+}
  export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 // Now to persist:
