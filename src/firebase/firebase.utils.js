@@ -52,6 +52,54 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
      return userRef;
 }
 
+// New Util here to for lesson 176 where we are moving our collection of items to Firebase
+// We added the call in App.js to get all the data in and then deleted it as soon as our data
+// was safely in the firestore DB. So this code below was only technically run once.
+// We are keeping it in case we need to add anything else to the database at a later date
+export const addCollectionAndDocuments = async (collectionKey,objectsToAdd) =>{
+//create collection using collection key
+const collectionRef = firestore.collection(collectionKey);
+
+//Add using batch so we know it all adds or none
+const batch = firestore.batch();
+//make me new document reference objects, but you create the unique key (newDOcRef)
+// Then set the data (batch.set()) to the shop item at that created newDocRef
+objectsToAdd.forEach(obj =>{
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef,obj);
+});
+
+return await batch.commit();
+}
+
+
+//Lesson 179
+//Function that will return the whole snapshot. We'll be getting an array and we want to convert it to an object
+// Map over the collection.docs and grab the data, .data(). Take each doc.data() and return a new object
+// with an added routeName(as we removed it when we loaded to firebase) and an id taht was generated in firebase
+// Obviusly have the title and the items
+export const convertCollectionsSnapshotToMap = (collections) =>{
+    const transformedCollection = collections.docs.map(doc =>{
+        const{title,items} = doc.data();
+            return{
+                routeName:encodeURI(title.toLowerCase()),
+                id:doc.id,
+                title,
+                items
+            }
+    });
+
+    // Pretty confusing but I think the point is to create an object map that we need in order to store 
+    // in our reducer. i.e, key value pair, where the keys are 'mens', 'hats, etc
+    // In the end you'll have an object where the hats property(key) is equal to the hats collection, and so on
+    return transformedCollection.reduce((accumulator,collection) =>{
+        accumulator[collection.title.toLowerCase()] = collection;
+        return accumulator;
+    }, {} );
+
+} 
+
+
 // Not sure about this shit
 // But the if() is becasue i was getting a ton of errors every time the page loaded initially. From stackoverflow
 if (!firebase.apps.length) {

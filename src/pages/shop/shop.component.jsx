@@ -11,17 +11,45 @@ import CollectionsOverview from '../../components/collections-overview/collectio
 
 import {Route} from 'react-router-dom'
 import CollectionPage from '../collection/collection.component'
+import {firestore,convertCollectionsSnapshotToMap} from '../../firebase/firebase.utils'
+import {connect} from 'react-redux'
+import { updateCollections } from '../../redux/shop/shop.actions'
 
-const ShopPage = ({match})=> {
+class ShopPage extends React.Component {
 
+   // Following code is to Grab the shop data from the firebase store
+   // Using componentDidMount to load upon starting app 
+   
+
+   // Return a collectionRef. Using that collectionRef, send the snapshot to the function
+   // convertCOllectionsSnap... in firebase.utils where it will create an array of the data for us
+   componentDidMount(){
+      const{updateCollections} = this.props; // update collections is now coming from props? via mapDispatch..
+
+      const collectionRef = firestore.collection('collections');
+   this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+         const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+         updateCollections(collectionsMap);
+      });
+   }
+
+
+   render(){
+
+      const {match} = this.props;
         return(
            <div className = 'shop-page'>
               <Route exact path = {`${match.path}`}  component = {CollectionsOverview} />
               <Route path = {`${match.path}/:collectionId`} component = {CollectionPage}/>
            </div>
         )
+        }
     }
 
+    // As we are moving our data from firebase to front end to redux
+const mapDispatchToProps = dispatch => ({
+   updateCollections: collectionsMap => 
+   dispatch(updateCollections(collectionsMap))
+});
 
-
-export default ShopPage;
+export default connect(null,mapDispatchToProps)(ShopPage);

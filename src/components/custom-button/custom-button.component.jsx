@@ -1,6 +1,6 @@
 import React from 'react'
 import './custom-button.styles.scss'
-
+import { CustomButtonContainer } from './custom-button.styles';
 //CustomButton component. Renders a custom button tag with styling
 // First pull the children who get passed in off our props to the CustomButton
 // THen destrcuture all the other other props and spread into our custombutton
@@ -19,5 +19,11 @@ const CustomButton = ({ children, isGoogleSignIn, inverted, ...otherProps }) => 
         </button>
     )
 }
+
+// Wont fucking work, moves the button off the image down below it in a shitty way
+// const CustomButton = ({ children, ...props }) => (
+//     <CustomButtonContainer {...props}>{children}</CustomButtonContainer>
+//   );
+  
 
 export default CustomButton;

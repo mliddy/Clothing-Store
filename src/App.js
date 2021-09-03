@@ -6,11 +6,12 @@ import ShopPage from './pages/shop/shop.component'
 import Header from './components/header/header.component'
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import CheckoutPage from './pages/checkout/checkout.component'
-import { auth,createUserProfileDocument } from './firebase/firebase.utils'
+import { auth,createUserProfileDocument} from './firebase/firebase.utils'
 import {connect} from 'react-redux'
 import {setCurrentUser} from './redux/user/user.actions'
 import { selectCurrentUser } from './redux/user/user.selectors';
 import {createStructuredSelector} from 'reselect'
+
 
 
 
@@ -39,12 +40,7 @@ class App extends React.Component {
     const{setCurrentUser} = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if(userAuth){
-        console.log('Logged in status: true')
-      }
-      else{
-        console.log('Logged in status: false')
-      }
+ 
       //Now we're checking to see if the snapshot from firebase has changed
       // The real use of this section though is that we'll get a snapshot of the DATA stored in our DB (.onSnapshot())
       // If statement because we dont want to set anything if the user is signed out 
@@ -52,7 +48,7 @@ class App extends React.Component {
       if(userAuth){
         const userRef = await createUserProfileDocument(userAuth); // userRef returned from createUSerProf..
         //Get the data from the user if it was a new authentification or the current user that is signed in and in DB
-        //onSnapshot( )gets us a snapshot of the data in our DB. Similar to onAuthStateChanged()
+        //onSnapshot() (which is a listener) gets us a snapshot of the data in our DB. Similar to onAuthStateChanged()
         userRef.onSnapshot(snapShot =>{
           //call setState to set our state(currentUser) with the values that we just got from the DB
           // Creating a new currentUSer object with the snapShot id (for id) and the data spread over for the rest
@@ -65,9 +61,7 @@ class App extends React.Component {
       }
 
       //If there is no userAuth(userLogs out), we still want to set currentUser to the null value
-      else{
         setCurrentUser(userAuth);
-      }
     })
    
   }
